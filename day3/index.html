@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 3 - DOM</title>
+</head>
+<body>
+
+    <h1>Welcome</h1>
+
+    <form id="userForm">
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="email" id="email" placeholder="Enter your email">
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2 id="message"></h2>
+
+    <script>
+        const form = document.querySelector("#userForm");
+        const message = document.querySelector("#message");
+
+        form.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            const name = document.querySelector("#name").value;
+            const email = document.querySelector("#email").value;
+
+            message.textContent = `Hello ${name}! Your email is ${email}.`;
+        });
+    </script>
+
+</body>
+</html>
 
