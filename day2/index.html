@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 2 - JavaScript</title>
+</head>
+<body>
+
+    <h1>Product List</h1>
+
+    <script>
+        const products = [
+            {
+                name: "Laptop",
+                price: 50000,
+                category: "Electronics"
+            },
+            {
+                name: "Mouse",
+                price: 800,
+                category: "Electronics"
+            },
+            {
+                name: "Keyboard",
+                price: 1500,
+                category: "Electronics"
+            },
+            {
+                name: "Bag",
+                price: 1200,
+                category: "Accessories"
+            },
+            {
+                name: "Bottle",
+                price: 500,
+                category: "Home"
+            }
+        ];
+
+        const calculateTotal = (products) => {
+            return products.reduce((total, product) => {
+                return total + product.price;
+            }, 0);
+        };
+
+        console.log("Total:", calculateTotal(products));
+
+        const { name, price } = products[0];
+
+        console.log("Product:", name);
+        console.log("Price:", price);
+    </script>
+
+</body>
+</html>
 
