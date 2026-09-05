@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 7 - Product Search</title>
 
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+            margin: 0;
+        }
+
+        h1 {
+            background: #333;
+            color: white;
+            padding: 20px;
+        }
+
+        form {
+            margin: 30px;
+        }
+
+        input {
+            padding: 12px;
+            width: 250px;
+        }
+
+        button {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+
+        #products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .card img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Product Search Application</h1>
+
+    <form id="searchForm">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Enter product name"
+        >
+
+        <button type="submit">Search</button>
+    </form>
+
+    <p id="message">Search for a product</p>
+
+    <div id="products"></div>
+
+
+    <script>
+
+        const form = document.getElementById("searchForm");
+        const input = document.getElementById("searchInput");
+        const productsDiv = document.getElementById("products");
+        const message = document.getElementById("message");
+
+
+        form.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const search = input.value.trim();
+
+            if (search === "") {
+                message.innerText = "Please enter a product name.";
+                productsDiv.innerHTML = "";
+                return;
+            }
+
+            message.innerText = "Loading...";
+            productsDiv.innerHTML = "";
+
+            try {
+
+                const response = await fetch(
+                    `https://dummyjson.com/products/search?q=${search}`
+                );
+
+                const data = await response.json();
+
+                const products = data.products;
+
+                if (products.length === 0) {
+                    message.innerText = "No products found.";
+                    return;
+                }
+
+                message.innerText =
+                    `${products.length} product(s) found`;
+
+                const filteredProducts =
+                    products.filter(product => product.price > 10);
+
+                productsDiv.innerHTML =
+                    filteredProducts.map(product => `
+
+                        <div class="card">
+
+                            <img src="${product.thumbnail}">
+
+                            <h2>${product.title}</h2>
+
+                            <p>Price: $${product.price}</p>
+
+                            <p>Category: ${product.category}</p>
+
+                        </div>
+
+                    `).join("");
+
+            }
+
+            catch (error) {
+
+                message.innerText =
+                    "Error loading products. Please try again.";
+
+                productsDiv.innerHTML = "";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
