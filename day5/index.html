@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 5 - Async JavaScript</title>
+</head>
 
+<body>
+
+    <h1>Asynchronous JavaScript</h1>
+
+    <button onclick="getData()">Get Data</button>
+
+    <p id="output">Click the button</p>
+
+    <script>
+
+        // Promise - simulate delayed API call
+        function fakeAPI() {
+            return new Promise((resolve, reject) => {
+
+                setTimeout(() => {
+                    resolve("Data received successfully!");
+                }, 2000);
+
+            });
+        }
+
+        // Async/Await
+        async function getData() {
+
+            document.getElementById("output").innerText =
+                "Loading...";
+
+            try {
+
+                const result = await fakeAPI();
+
+                document.getElementById("output").innerText =
+                    result;
+
+            } catch (error) {
+
+                document.getElementById("output").innerText =
+                    "Something went wrong!";
+
+            }
+        }
+
+    </script>
+
+</body>
+</html>
